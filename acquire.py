@@ -6,7 +6,7 @@ import env
 
 def pull_titanic_data():
     sql_query= 'SELECT * FROM passengers'
-    df = pd.read_Sql(sql_query, env.get_connection('titanic_db'))
+    df = pd.read_sql(sql_query, env.get_connection('titanic_db'))
     return df
 
 def get_titanic_data():
@@ -20,17 +20,7 @@ def get_titanic_data():
 #Make a function named get_iris_data
 
 def pull_iris_data():
-    sql_query = '''
-                SELECT
-                    species_id,
-                    species_name,
-                    sepal_length,
-                    sepal_width,
-                    petal_length,
-                    petal_width
-                FROM measurements
-                JOIN species USING(species_id
-                '''
+    sql_query = 'SELECT * FROM measurements JOIN species USING(species_id)'
     df = pd.read_sql(sql_query, env.get_connection('iris_db'))
     return df
 
@@ -60,7 +50,7 @@ def get_telco_data():
     if os.path.isfile('telco.csv'):
         df = pd.read_csv('telco.csv', index_col = 0)
     else:
-        df = pull_iris_data()
+        df = pull_telco_data()
         df.to_csv('telco.csv')
     return df
 
