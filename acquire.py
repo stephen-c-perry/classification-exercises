@@ -37,22 +37,26 @@ def get_iris_data():
 #Make a function named get_telco_data
 
 def pull_telco_data():
-    sql_query = '''
-                SELECT * FROM customers
-                JOIN contract_types USING (contract_type_id)
-                JOIN internet_service_types USING (contract_type_id)
-                JOIN payment_types using (payment_type_id)
-                '''
+    sql_query = """
+                select * from customers
+                join contract_types using (contract_type_id)
+                join internet_service_types using (internet_service_type_id)
+                join payment_types using (payment_type_id)
+                """
     df = pd.read_sql(sql_query, env.get_connection('telco_churn'))
     return df
 
 def get_telco_data():
     if os.path.isfile('telco.csv'):
-        df = pd.read_csv('telco.csv', index_col = 0)
+        df = pd.read_csv('telco.csv', index_col=0)
     else:
         df = pull_telco_data()
         df.to_csv('telco.csv')
     return df
+
+
+
+
 
 
 # Once you've got your get_titanic_data, get_iris_data, and get_telco_data 
