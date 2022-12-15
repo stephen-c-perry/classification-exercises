@@ -1,5 +1,6 @@
 import env
 import acquire
+import pandas as pd
 
 '''
 The three functions below (prep_iris, prep_titanic, prep_telco) take in the corresponding
@@ -14,7 +15,7 @@ def prep_iris(iris):
     iris = pd.concat([iris, species_encoded], axis=1)
     return iris
 
-prepped_iris = prep_iris(acquire.get_iris_data())
+# prepped_iris = prep_iris(acquire.get_iris_data())
 
 
 
@@ -26,7 +27,7 @@ def prep_titanic(titanic_df):
     titanic_df = pd.concat([titanic_df, dummies], axis=1)
     return titanic_df
 
-prepped_titanic = prep_titanic(acquire.get_titanic_data())
+# prepped_titanic = prep_titanic(acquire.get_titanic_data())
 
 
 #telco
@@ -58,7 +59,7 @@ def prep_telco(telco_df):
 
     return telco_df
 
-prepped_telco = prep_telco(acquire.get_telco_data())
+# prepped_telco = prep_telco(acquire.get_telco_data())
 
 
 # Split Data (train, validate, test)
@@ -76,3 +77,5 @@ def split_data(df, target=''):
                              random_state=1349,
                              stratify=train[target])
     return train, val, test
+
+    # Need train_test_split function^
