@@ -3,6 +3,12 @@ import pandas as pd
 import env
 
 
+'''
+the pull% functions below create a function with a sql query to get the desired dataset from the sql server.  the get% functions
+below first check for a csv file of the desired dataset, if the csv does not exist it uses the pull% function to request the data 
+from the sql server then exports it to save locally as a csv and returns the dataframe
+'''
+
 
 def pull_titanic_data():
     sql_query= 'SELECT * FROM passengers'
@@ -57,13 +63,5 @@ def get_telco_data():
 
 
 
-
-
-# Once you've got your get_titanic_data, get_iris_data, and get_telco_data 
-# functions written, now it's time to add caching to them. To do this, edit the
-#  beginning of the function to check for the local filename of
-#  telco.csv, titanic.csv, or iris.csv. If they exist, use the .csv file.
-#  If the file doesn't exist, then produce the SQL and pandas necessary to create a
-#  dataframe, then write the dataframe to a .csv file with the appropriate name.
 
 

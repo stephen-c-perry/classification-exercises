@@ -1,7 +1,12 @@
 import env
 import acquire
 
-#iris
+'''
+The three functions below (prep_iris, prep_titanic, prep_telco) take in the corresponding
+datasets and cleans them by dropping, encoding, concatenating, changing data types, etc
+'''
+
+
 def prep_iris(iris):
     iris = iris.drop(columns=['species_id'])
     iris.rename(columns={'species_name': 'species'}, inplace=True)
@@ -57,7 +62,10 @@ prepped_telco = prep_telco(acquire.get_telco_data())
 
 
 # Split Data (train, validate, test)
-
+'''
+split_data is a function that takes in a dataframe and a specified target column, splits that data first into train and 
+test dataframes, then splits the train set further into train and validate.  This results in 3 dataframes to use for modeling.
+'''
 def split_data(df, target=''):
     train, test = train_test_split(df, 
                                train_size = 0.8,
