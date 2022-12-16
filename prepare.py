@@ -21,13 +21,29 @@ def prep_iris(iris):
 
 # titanic
 
-def prep_titanic(titanic_df):
-    titanic_df = titanic_df = titanic_df.drop(columns=['deck', 'age'])
-    dummies = pd.get_dummies(titanic_df[['embark_town', 'sex']], drop_first=True)
-    titanic_df = pd.concat([titanic_df, dummies], axis=1)
-    return titanic_df
+#def prep_titanic(titanic_df):
+ #   titanic_df = titanic_df = titanic_df.drop(columns=['deck', 'age'])
+  #  dummies = pd.get_dummies(titanic_df[['embark_town', 'sex']], drop_first=True)
+   # titanic_df = pd.concat([titanic_df, dummies], axis=1)
+    #return titanic_df
+
+# the above function did not sufficiently clean the titanic data.  correction below
 
 # prepped_titanic = prep_titanic(acquire.get_titanic_data())
+
+
+
+def prep_titanic(titanic_df):
+
+    titanic_df = titanic_df.drop_duplicates()
+    cols_to_drop = ['deck', 'embarked', 'class', 'passenger_id']
+    titanic_df = titanic_df.drop(columns=cols_to_drop)
+    titanic_df['embark_town'] = titanic_df.embark_town.fillna(value='Southampton')
+    dummy_df = pd.get_dummies(titanic_df[['sex', 'embark_town']], dummy_na=False, drop_first=[True])
+    titanic_df = titanic_df.drop(columns=['sex'])
+    titanic_df = pd.concat([titanic_df, dummy_df], axis=1)
+    
+    return titanic_df
 
 
 #telco
@@ -79,3 +95,11 @@ def split_data(df, target=''):
     return train, val, test
 
     # Need train_test_split function^
+
+
+#spit function
+
+def train_test_split(df, target):
+    train, test = train_test_split(df, test_size=.2, random_state=123, stratify=df[target])
+    train, validate = train_test_split(train, test_size=.25, random_state=123, stratify=train[target])
+    return train, validate, test
