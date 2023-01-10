@@ -1,6 +1,7 @@
 import env
 import acquire
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 '''
 The three functions below (prep_iris, prep_titanic, prep_telco) take in the corresponding
@@ -99,7 +100,16 @@ def split_data(df, target=''):
 
 #spit function
 
-def train_test_split(df, target):
+def my_train_test_split(df, target):
     train, test = train_test_split(df, test_size=.2, random_state=123, stratify=df[target])
     train, validate = train_test_split(train, test_size=.25, random_state=123, stratify=train[target])
+    return train, validate, test
+
+
+def split_data(df):
+    train_validate, test = train_test_split(df, test_size=0.2, random_state=123, stratify=df.survived)
+    train, validate = train_test_split(train_validate, 
+                                       test_size=0.3, 
+                                       random_state=123, 
+                                       stratify=train_validate.survived)
     return train, validate, test
